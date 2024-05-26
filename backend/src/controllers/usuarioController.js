@@ -1,15 +1,17 @@
 import { Router } from "express";
-import { createUser, updateUser, deleteUser, listUsers } from "../services/usuarioService";
+import { checkToken } from '../controllers/loginUsuarioController';
+import { listUsers, createUser } from "../services/usuarioService"; // Importando funções do serviço de usuário
 
 const router = Router();
 
-router.post('/', async (req, res) => {
+// Rota para criar um novo usuário
+router.post('/cadastrar', async (req, res) => {
     try {
-        const user = await createUser(req.body);
-        res.status(201).json(user);
+        const user = await createUser(req.body); // Chama a função para criar um usuário com os dados recebidos no corpo da requisição
+        res.status(201).json(user); // Retorna o usuário criado com o status 201 (Created)
     } catch (error) {
-        if (error.code === 11000 && error.keyPattern && error.keyPattern.cpf) {
-            res.status(400).json({ message: 'Já existe um usuário com esse CPF no banco!' });
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.email) {
+            res.status(400).json({ message: 'Já existe um usuário com esse Email no banco!' });
         } else if (error.message.includes('required')) {
             res.status(400).json({ message: 'Informação obrigatória não foi enviada pelo formulário.' });
         } else {
@@ -18,36 +20,11 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Rota para listar usuários
 router.get('/', async (req, res) => {
     try {
-        const userlist = await listUsers();
-        res.status(200).json(userlist);
-    } catch (error) {
-        res.status(500).json({ message: 'Ocorreu um erro interno no servidor.' });
-    }
-});
-
-router.put('/:userId', async (req, res) => {
-    const userId = req.params.userId;
-    try {
-        const updatedUser = await updateUser(userId, req.body);
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        if (error.code === 11000 && error.keyPattern && error.keyPattern.cpf) {
-            res.status(400).json({ message: 'Já existe um usuário com esse CPF no banco!' });
-        } else if (error.message.includes('required')) {
-            res.status(400).json({ message: 'Informação obrigatória não foi enviada pelo formulário.' });
-        } else {
-            res.status(500).json({ message: 'Ocorreu um erro interno no servidor.' });
-        }
-    }
-});
-
-router.delete('/:userId', async (req, res) => {
-    const userId = req.params.userId;
-    try {
-        await deleteUser(userId);
-        res.status(204).send();
+        const userlist = await listUsers(); // Chama a função para listar usuários
+        res.status(200).json(userlist); // Retorna a lista de usuários
     } catch (error) {
         res.status(500).json({ message: 'Ocorreu um erro interno no servidor.' });
     }

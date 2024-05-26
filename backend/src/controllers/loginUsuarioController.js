@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Router } from "express";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import Usuario from '../models/User'; // Importando o modelo de usuário
+import Usuario from '../models/usuarioSchema'; // Importando o modelo de usuário
 import databaseConnection from '../utils/database';
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -13,16 +13,16 @@ const router = Router();
 databaseConnection();
 
 router.post('/', async (req, res) => {
-    const { cpf, password } = req.body;
+    const { email, password } = req.body;
 
     // Validação
-    if (!cpf || !password) {
-        return res.status(422).json({ message: 'CPF e senha são obrigatórios!' });
+    if (!email || !password) {
+        return res.status(422).json({ message: 'email e senha são obrigatórios!' });
     }
 
     try {
-        // Buscar usuário pelo CPF
-        const usuario = await Usuario.findOne({ cpf });
+        // Buscar usuário pelo email
+        const usuario = await Usuario.findOne({ email });
 
         if (!usuario) {
             return res.status(404).json({ message: 'Usuário não encontrado' });
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
         const tokenData = {
             id: usuario._id,
             name: usuario.name,
-            cpf: usuario.cpf,
+            email: usuario.email,
             nivelAcesso: usuario.nivelAcesso,
             // Adicionar outras informações relevantes do usuário aqui, se necessário
         };
@@ -96,7 +96,7 @@ export function checkUsuarioToken(req, res, next) {
         const secret = process.env.SECRET;
         const decodedToken = jwt.verify(token, secret);
         req.name = decodedToken.name; // Adiciona o nome do usuário à requisição
-        req.cpf = decodedToken.cpf; // Adiciona o CPF do usuário à requisição
+        req.email = decodedToken.email; // Adiciona o email do usuário à requisição
         next();
     } catch (error) {
         return res.status(400).json({ message: 'Token Inválido!' });

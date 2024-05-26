@@ -2,8 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
-import usuarioController from './controllers/usuarioController';
-import loginUsuario from "./controllers/loginUsuario";
+import usuarioController from "./controllers/usuarioController";
+import loginUsuarioController, { checkUsuarioToken } from "./controllers/loginUsuarioController";
+import path from 'path';
 
 dotenv.config();
 
@@ -18,12 +19,10 @@ app.get('/', (req, res) => {
 });
 
 // Rotas de Autenticação
-app.use('/login/usuario', loginUsuario);
-
+app.use('/login/usuario', loginUsuarioController);
 
 // Rotas do Usuário
-app.use('/geral/usuario', usuarioController);
-
+app.use('/usuario', usuarioController);
 
 // Porta de escuta
 const PORT = process.env.PORT || 3000;

@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import usuarioController from "./controllers/usuarioController";
+import perfilController from "./controllers/perfilController"
 import loginUsuarioController, { checkUsuarioToken } from "./controllers/loginUsuarioController";
 import path from 'path';
 
@@ -23,6 +24,9 @@ app.use('/login/usuario', loginUsuarioController);
 
 // Rotas do Usuário
 app.use('/usuario', usuarioController);
+
+// Rota de criação de perfil para um usuario
+app.use('/perfil/cadastrar', perfilController)
 
 // Porta de escuta
 const PORT = process.env.PORT || 3000;

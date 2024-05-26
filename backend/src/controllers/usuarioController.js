@@ -21,7 +21,7 @@ router.post('/cadastrar', async (req, res) => {
 });
 
 // Rota para listar usuários
-router.get('/', async (req, res) => {
+router.get('/listar', async (req, res) => {
     try {
         const userlist = await listUsers(); // Chama a função para listar usuários
         res.status(200).json(userlist); // Retorna a lista de usuários
@@ -29,5 +29,7 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: 'Ocorreu um erro interno no servidor.' });
     }
 });
+
+
 
 export default router;

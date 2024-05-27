@@ -16,7 +16,7 @@ function Login() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            navigate('/');
+            navigate('/profiles');
         }
     }, [navigate]);
 
@@ -43,7 +43,7 @@ function Login() {
                 setTimeout(() => {
                     toast.success('Autenticado com sucesso!, Bem vindo...', { autoClose: 2000 });
                     setTimeout(() => {
-                        navigate('/');
+                        navigate('/profiles');
                         window.location.reload();
                     }, 2000);
                 }, 100);

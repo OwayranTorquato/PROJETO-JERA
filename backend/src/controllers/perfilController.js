@@ -4,7 +4,7 @@ import { criarPerfil, listarPerfis, obterPerfil, adicionarFilmeFavorito } from "
 const router = Router();
 
 // Rota para criar um novo perfil para um usuário existente
-router.post('/:idUsuario', async (req, res) => {
+router.post('/cadastrar/:idUsuario', async (req, res) => {
     try {
         const idUsuario = req.params.idUsuario; // Obtém o ID do usuário da URL
         const perfil = await criarPerfil(idUsuario, req.body); // Chama a função para criar um perfil para o usuário
@@ -41,10 +41,10 @@ router.get('/:idPerfil', async (req, res) => {
 });
 
 // Rota para adicionar um filme favorito ao perfil de um usuário
-router.post('/:idUsuario/:idPerfil/movieId', async (req, res) => {
+router.post('/:idUsuario/:idPerfil/:movieId', async (req, res) => {
     try {
-        const { idUsuario, idPerfil } = req.params;
-        const { movieId } = req.body;
+        const { idUsuario, idPerfil, movieId} = req.params;
+
 
         // Chama a função do serviço para adicionar o filme favorito ao perfil do usuário
         const filmesFavoritos = await adicionarFilmeFavorito(idUsuario, idPerfil, movieId);

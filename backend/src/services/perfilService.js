@@ -59,7 +59,7 @@ export const adicionarFilmeFavorito = async (idUsuario, idPerfil, movieId) => {
         }
 
         // Adiciona o ID do filme à lista de filmes favoritos do perfil
-        perfil.filmesFavoritados.push({ titulo: movieId });
+        perfil.filmesFavoritados.push({ id: movieId });
 
         // Salva as alterações no usuário
         await usuario.save();

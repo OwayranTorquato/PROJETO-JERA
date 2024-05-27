@@ -26,7 +26,7 @@ app.use('/login/usuario', loginUsuarioController);
 app.use('/usuario', usuarioController);
 
 // Rota de criação de perfil para um usuario
-app.use('/perfil/cadastrar', perfilController)
+app.use('/perfil', perfilController)
 
 // Porta de escuta
 const PORT = process.env.PORT || 3000;

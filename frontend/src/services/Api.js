@@ -3,7 +3,7 @@ import axios from 'axios';
 //Instância do axios com configuração personalizada
 export const api = axios.create({
     // Configuração da URL base para todas as requisições feitas com esta instância do axios
-    baseURL: "http://127.0.0.1:3333"
+    baseURL: "http://127.0.0.1:5000"
 });
 
 //Interceptor para incluir o token JWT em todas as requisições

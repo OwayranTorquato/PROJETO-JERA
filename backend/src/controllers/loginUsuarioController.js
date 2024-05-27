@@ -97,6 +97,7 @@ export function checkUsuarioToken(req, res, next) {
         const decodedToken = jwt.verify(token, secret);
         req.name = decodedToken.name; // Adiciona o nome do usuário à requisição
         req.email = decodedToken.email; // Adiciona o email do usuário à requisição
+        req.userId = decodedToken._id; // Adiciona o ID do usuário à requisição
         next();
     } catch (error) {
         return res.status(400).json({ message: 'Token Inválido!' });

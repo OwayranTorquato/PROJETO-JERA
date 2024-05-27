@@ -9,7 +9,7 @@ const generoSchema = new Schema({
 });
 
 const filmesFavoritosSchema = new Schema({
-  titulo: {
+  id: {
     type: String
   }
 });

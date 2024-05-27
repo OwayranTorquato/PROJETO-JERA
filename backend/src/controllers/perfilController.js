@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { criarPerfil, listarPerfis, obterPerfil } from "../services/perfilService"; // Importando função do serviço de perfil
+import { criarPerfil, listarPerfis, obterPerfil, adicionarFilmeFavorito } from "../services/perfilService"; // Importando função do serviço de perfil
 
 const router = Router();
 
@@ -37,6 +37,22 @@ router.get('/:idPerfil', async (req, res) => {
         res.status(200).json(perfil); // Retorna o perfil
     } catch (error) {
         res.status(500).json({ message: 'Ocorreu um erro interno no servidor.' });
+    }
+});
+
+// Rota para adicionar um filme favorito ao perfil de um usuário
+router.post('/:idUsuario/:idPerfil/movieId', async (req, res) => {
+    try {
+        const { idUsuario, idPerfil } = req.params;
+        const { movieId } = req.body;
+
+        // Chama a função do serviço para adicionar o filme favorito ao perfil do usuário
+        const filmesFavoritos = await adicionarFilmeFavorito(idUsuario, idPerfil, movieId);
+
+        // Retorna os filmes favoritos atualizados do perfil do usuário
+        res.status(200).json(filmesFavoritos);
+    } catch (error) {
+        res.status(500).json({ message: 'Ocorreu um erro interno no servidor: ' + error.message });
     }
 });
 

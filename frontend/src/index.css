@@ -1,3 +1,26 @@
+* {
+  font-family: Helvetica;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+}
+
+a {
+  text-decoration: none;
+  color: #f7d354;
+  transition: 0.5s;
+}
+
+a:hover {
+  color: #b8930c;
+}
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 @tailwind base;

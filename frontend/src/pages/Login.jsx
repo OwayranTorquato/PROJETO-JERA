@@ -8,7 +8,7 @@ import ToastContainer from '../components/Toasts/ToastManager'; // Importe o com
 
 function Login() {
     const navigate = useNavigate();
-    const [cnpj, setCnpj] = useState('');
+    const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -16,32 +16,34 @@ function Login() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            navigate('/dashboard');
+            navigate('/');
         }
     }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+    
         setLoading(true);
-
+    
         setTimeout(async () => {
             try {
                 const response = await api.post(
-                    '/login/empresa',
-                    { cnpj, password },
+                    '/login/usuario',
+                    { email, password },
                     { headers: { 'Content-Type': 'application/json' } }
                 );
-
+    
                 const token = response.data.token;
+                const userId = response.data.id; // Obter o ID do usuário do response.data
                 localStorage.setItem('token', token);
-
+                localStorage.setItem('userId', userId); // Armazenar o ID do usuário no localStorage
+    
                 setLoading(false);
-
+    
                 setTimeout(() => {
                     toast.success('Autenticado com sucesso!, Bem vindo...', { autoClose: 2000 });
                     setTimeout(() => {
-                        navigate('/dashboard');
+                        navigate('/');
                         window.location.reload();
                     }, 2000);
                 }, 100);
@@ -55,6 +57,7 @@ function Login() {
             }
         }, 2000);
     };
+    
 
 
     return (
@@ -72,12 +75,12 @@ function Login() {
 
                 <form onSubmit={handleLogin}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="cnpj">CNPJ:</label>
+                        <label className="block text-sm font-medium text-gray-700" htmlFor="email">email:</label>
                         <input
                             type="text"
-                            id="cnpj"
-                            value={cnpj}
-                            onChange={(e) => setCnpj(e.target.value)}
+                            id="email"
+                            value={email}
+                            onChange={(e) => setemail(e.target.value)}
                             className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                             placeholder="Digite aqui..."
                             required

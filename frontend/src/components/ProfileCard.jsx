@@ -1,5 +1,10 @@
-// Componente de Card de Perfil
+import React from 'react';
+
 const ProfileCard = ({ profile }) => {
+    if (!profile) {
+        return null;
+    }
+
     return (
         <div className="border rounded-lg p-4 m-2 bg-white">
             <h2 className="text-lg font-semibold">{profile.nome}</h2>
@@ -9,3 +14,5 @@ const ProfileCard = ({ profile }) => {
         </div>
     );
 };
+
+export default ProfileCard;

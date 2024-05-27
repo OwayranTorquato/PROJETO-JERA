@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import { AuthProvider } from "./AuthContext";
 import PrivateRoute from "./PrivateRoute";
 import Profile from "./pages/profiles"
-
+import ErrorNotFound from "./pages/ErrorNotFound";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -17,9 +17,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+        <Route path="*" element={<ErrorNotFound />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<PrivateRoute element={<Login />} />} />
           <Route path="/profiles" element={<Profile />} />
-          <Route path="/" element={<PrivateRoute element={<App />} />} />
+          <Route path="/movie" element={<PrivateRoute element={<App />} />} />
           <Route path="movie/:id" element={<PrivateRoute element={<Movie />} />} />
           <Route path="search" element={<PrivateRoute element={<Search />} />} />
         </Routes>
